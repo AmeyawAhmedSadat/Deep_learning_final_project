@@ -1,0 +1,16 @@
+{
+  "classes": ["a photo of nature", "a photo of cat", "a photo of a party", "a photo of a food", "a photo of a dog", "a photo of a car", "a photo of a lion", "a photo of a man", "a photo of a woman"],
+  "db_dict": {
+    "a photo of nature": "nature",
+    "a photo of cat": "cats",
+    "a photo of a party": "party",
+    "a photo of a food": "food",
+    "a photo of a dog": "dogs",
+    "a photo of a car": "cars",
+	"a photo of a lion": "lion",
+	"a photo of a man": "man",
+	"a photo of a woman": "woman"
+  },
+  "th_others": 0.8,
+  "imgs_path": "/home/jovyan/Deep_Learning/dlba_course_miba_24/topic_09/app/data"
+}
