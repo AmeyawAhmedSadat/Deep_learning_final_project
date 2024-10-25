@@ -13,6 +13,7 @@ from deepface import DeepFace
 from transformers import pipeline
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 
 def img_caption(model, processor, img, text=None):
     """
@@ -29,10 +30,10 @@ def img_caption(model, processor, img, text=None):
     res = processor.decode(out[0], skip_special_tokens=True)
     return res
 
-# Change YOLO detection to segmentation model (using YOLOv8 segmentation because 11 doesn't work)
+# Change YOLO detection to segmentation model using YOLO11 instance segmentation
 def img_detect(model, img, plot=False):
     """
-    Run YOLO segmentation on an image.
+    Run YOLO11 instance segmentation on an image.
     """
     result = model(img)[0]
     masks = result.masks  # Segmentation masks
@@ -84,8 +85,8 @@ with st.spinner('Please wait, application is initializing...'):
     MODEL_CAP = BlipForConditionalGeneration.from_pretrained(MODEL_CAP_NAME)
 
     # Detection objects model
-    MODEL_DET_NAME = 'yolov8n.pt'
-    MODEL_DET = YOLO(MODEL_DET_NAME)
+    MODEL_DET_NAME = 'yolo11n-seg.pt'  # Using YOLOv11 segmentation model
+    MODEL_SEG = YOLO(MODEL_DET_NAME)
     ####################################
     ########## YOUR CODE HERE ##########
     ####################################
@@ -93,10 +94,7 @@ with st.spinner('Please wait, application is initializing...'):
     # models and try segmentation model
     # as an alternative:
     # https://docs.ultralytics.com/tasks/segment/
-    MODEL_SEG_NAME = 'yolov8n-seg.pt'
-    MODEL_SEG = YOLO(MODEL_SEG_NAME)
-    # Use YOLOv8 for segmentation
-
+    # Model defined above using YOLOv11 segmentation
     ####################################
 
     # Classification model and classes
@@ -107,7 +105,7 @@ with st.spinner('Please wait, application is initializing...'):
     ####################################
     # You may want to change the list of
     # classes so you will have to edit
-    # `config.yaml` file and update it
+    # config.yaml file and update it
     # with new data.
     ####################################
     APP_CONFIG = read_json(file_path='config.json')
@@ -128,13 +126,13 @@ with st.spinner('Please wait, application is initializing...'):
     # Faces detection and recognition config
     DEEPFACE_MODELS = [
         'VGG-Face', 
-		'Facenet', 
-		'Facenet512', 
-		'OpenFace', 
+        'Facenet', 
+        'Facenet512', 
+        'OpenFace', 
         'DeepFace', 
-		'DeepID', 
-		'ArcFace', 
-		'Dlib', 
+        'DeepID', 
+        'ArcFace', 
+        'Dlib', 
         'SFace', 'GhostFaceNet'
     ]
     DB_PATH = '/home/jovyan/Deep_Learning/dlba_course_miba_24/topic_09/app/data/db'
